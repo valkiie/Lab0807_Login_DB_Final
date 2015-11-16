@@ -85,22 +85,30 @@ public class MainActivity extends AppCompatActivity {
         EditText name = (EditText) findViewById(R.id.editText);
         EditText password = (EditText) findViewById(R.id.editText2);
         Context context = getApplicationContext();
+        String encryptedPass="";
         int duration = Toast.LENGTH_SHORT;
 //        Log.e("LOG", name.getText().toString());
 //        Log.e("LOG", password.getText().toString());
 //        Log.e("LOG", empresaList.get(0).toString());
 //        Log.e("LOG", empresaList.get(0).get("name"));
         try{
-            String encryptedPass=(SHA1(password.getText().toString()));
+            encryptedPass=(SHA1(password.getText().toString()));
             Log.e("LOG", encryptedPass);
         } catch (Exception e) {
             e.printStackTrace();
         }
         for(int i=0;i<empresaList.size();i++){
             if(name.getText().toString().equals(empresaList.get(i).get("name"))){
-                CharSequence text = "Bienvenido " + name.getText().toString();
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                if(encryptedPass.equals(empresaList.get(i).get("password"))){
+                    CharSequence text = "Bienvenido " + name.getText().toString();
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else{
+                    CharSequence text = "Contraseña incorrecta ";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         }
 
